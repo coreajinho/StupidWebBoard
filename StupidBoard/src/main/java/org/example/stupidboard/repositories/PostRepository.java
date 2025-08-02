@@ -1,13 +1,10 @@
 package org.example.stupidboard.repositories;
 
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.example.stupidboard.model.Post;
+import org.springframework.stereotype.Repository;
 
-public class PostRepository {
-    public JdbcTemplate jdbcTemplate;
-
-    public PostRepository(JdbcTemplate jdbcTemplate){};
-
-    public getPost(int ID){
-
-    }
+@Repository
+public interface PostRepository extends JpaRepository<Post,Long> {
+    
 }

@@ -1,6 +1,6 @@
 package org.example.stupidboard;
 
-import org.example.stupidboard.controllers.Testcontroller;
+import org.example.stupidboard.controllers.Postcontroller;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,8 +9,6 @@ public class StupidBoardApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(StupidBoardApplication.class, args);
-        Testcontroller test = new Testcontroller();
-        test.testmethod();
     }
 }
 
