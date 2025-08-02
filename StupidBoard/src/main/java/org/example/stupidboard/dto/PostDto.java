@@ -1,18 +1,26 @@
 package org.example.stupidboard.dto;
 
-import lombok.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 
-@Getter
-@AllArgsConstructor
-@ToString
 public class PostDto {
-    private final Long id;
-    private final String title;
-    private final String content;
-    private final String writer;
-    private final LocalDateTime modifiedTime;
-
-
+    public record Request(
+            @Size(min=1, max=50) @NotBlank String title,
+            @Size(min=1) @NotBlank String content,
+            @Size(min=5, max = 15) @NotBlank String writer
+    ){
+    }
+    @Builder
+    public record Response(
+            Long id,
+            String title,
+            String content,
+            String writer,
+            LocalDateTime createdTime,
+            LocalDateTime modifiedTime
+    ) {
+    }
 }

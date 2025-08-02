@@ -2,11 +2,11 @@ package org.example.stupidboard.services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.stupidboard.dto.PostDto;
 import org.example.stupidboard.model.Post;
 import org.example.stupidboard.repositories.PostRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.example.stupidboard.dto.PostDto;
+
 import java.util.Optional;
 
 @Service
@@ -15,24 +15,33 @@ import java.util.Optional;
 public class PostService {
     private final PostRepository postRepository;
 
-    @PostMapping
-    public void createPost(PostDto postDto){
-        Post post = new Post(postDto.)
-        postRepository.save(postDto);
+    public Post toPostEntity(PostDto.Request postDto){
+        return Post.builder()
+                .title(postDto.title())
+                .content(postDto.content())
+                .writer(postDto.writer())
+                .build();
     }
 
-    public Optional<Post> getPost(Long id){
+    public PostDto.Response toPostDto(Post post) {
+        return PostDto.Response.builder()
+                .id(post.getId())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .writer(post.getWriter())
+                .createdTime(post.getCreatedAt())
+                .modifiedTime(post.getModifiedAt())
+                .build();
+    }
+
+    public PostDto.Response createPost(PostDto.Request postDto) {
+        Post post = this.toPostEntity(postDto);
+        Post savedPost = postRepository.save(post);
+        return this.toPostDto(savedPost);
+    }
+
+
+    public Optional<Post> getPost(Long id) {
         return postRepository.findById(id);
     }
-
-//    public Post updatePost(Long id) {
-//        Optional<Post> testPost = postRepository.findById(id);
-//        if (!testPost.isPresent()) {
-//            throw new NullPointerException("there is no TestPost");
-//        }
-//        Post updatePost = testPost.get();
-//        updatePost = updatePost.toBuilder().content("updated").build();
-//        log.info(updatePost.toString());
-//        return postRepository.save(updatePost);
-//    }
 }
