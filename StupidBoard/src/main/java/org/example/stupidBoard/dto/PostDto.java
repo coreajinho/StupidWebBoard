@@ -1,4 +1,4 @@
-package org.example.stupidboard.dto;
+package org.example.stupidBoard.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

@@ -1,4 +1,4 @@
-package org.example.stupidboard.model;
+package org.example.stupidBoard.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,4 +1,4 @@
-package org.example.stupidboard;
+package org.example.stupidBoard;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

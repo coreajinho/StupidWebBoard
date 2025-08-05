@@ -1,10 +1,11 @@
-package org.example.stupidboard.services;
+package org.example.stupidBoard.services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.stupidboard.dto.PostDto;
-import org.example.stupidboard.model.Post;
-import org.example.stupidboard.repositories.PostRepository;
+import org.example.stupidBoard.dto.PostDto;
+import org.example.stupidBoard.exception.PostNotFoundExeption;
+import org.example.stupidBoard.model.Post;
+import org.example.stupidBoard.repositories.PostRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -35,9 +36,9 @@ public class PostService {
     }
 
     public PostDto.Response createPost(PostDto.Request postDto) {
-        Post post = this.toPostEntity(postDto);
+        Post post = toPostEntity(postDto);
         Post savedPost = postRepository.save(post);
-        return this.toPostDto(savedPost);
+        return toPostDto(savedPost);
     }
 
     public PostDto.Response updatePost(PostDto.Request postDto, Long id){
@@ -47,7 +48,16 @@ public class PostService {
         exeistPost.setContent(postDto.content());
         exeistPost.setWriter(postDto.writer());
         Post savedPost = postRepository.save(exeistPost);
-        return this.toPostDto(savedPost);
+        return toPostDto(savedPost);
     }
 
+    public void deletePost(Long id){
+            postRepository.deleteById(id);
+    }
+
+    public PostDto.Response getPost(Long id) throws Exception{
+        Post post = postRepository.findById(id)
+                .orElseThrow( () -> new PostNotFoundExeption("해당id의 게시글이 없습니다. "));
+        return toPostDto(post);
+    }
 }
