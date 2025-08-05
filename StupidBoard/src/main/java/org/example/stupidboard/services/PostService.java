@@ -15,7 +15,7 @@ import java.util.Optional;
 public class PostService {
     private final PostRepository postRepository;
 
-    public Post toPostEntity(PostDto.Request postDto){
+    public Post toPostEntity(PostDto.Request postDto) {
         return Post.builder()
                 .title(postDto.title())
                 .content(postDto.content())
@@ -40,8 +40,14 @@ public class PostService {
         return this.toPostDto(savedPost);
     }
 
-
-    public Optional<Post> getPost(Long id) {
-        return postRepository.findById(id);
+    public PostDto.Response updatePost(PostDto.Request postDto, Long id){
+        Optional<Post> post = postRepository.findById(id);
+        Post exeistPost = post.orElseThrow();
+        exeistPost.setTitle(postDto.title());
+        exeistPost.setContent(postDto.content());
+        exeistPost.setWriter(postDto.writer());
+        Post savedPost = postRepository.save(exeistPost);
+        return this.toPostDto(savedPost);
     }
+
 }

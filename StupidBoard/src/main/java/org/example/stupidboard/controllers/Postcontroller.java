@@ -22,7 +22,9 @@ public class Postcontroller {
     }
 
     @PutMapping("/{id}")
-    public void updatePost(@Valid @RequestBody PostDto.Request postDto, @PathVariable Long id){
-
+    public ResponseEntity<PostDto.Response> updatePost(@Valid @RequestBody PostDto.Request postDto, @PathVariable Long id){
+        PostDto.Response responseDto = postService.updatePost(postDto,id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+                .body(responseDto);
     }
 }
